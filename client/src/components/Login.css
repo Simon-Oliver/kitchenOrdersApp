@@ -1,0 +1,19 @@
+.login {
+    width: 20vw;
+}
+
+.ui.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.container.login-button {
+    display: flex;
+}
+
+
+.login-link {
+    width: 100.5px;
+    margin: 0 0 0 auto;
+    align-self: flex-end;
+}
