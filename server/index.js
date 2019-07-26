@@ -1,8 +1,13 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const router = require('./routes/index');
 const users = require('./routes/users');
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/kitchenTicketing', {
+  useNewUrlParser: true
+});
 
 const app = express();
 
