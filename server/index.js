@@ -5,9 +5,19 @@ const mongoose = require('mongoose');
 const router = require('./routes/index');
 const users = require('./routes/users');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/kitchenTicketing', {
-  useNewUrlParser: true
-});
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/kitchenTicketing',
+  {
+    useNewUrlParser: true
+  },
+  function(err) {
+    if (err) {
+      throw err;
+    } else {
+      console.log(`Successfully connected to ${mongo_uri}`);
+    }
+  }
+);
 
 const app = express();
 
