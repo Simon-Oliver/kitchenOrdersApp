@@ -14,7 +14,7 @@ mongoose.connect(
     if (err) {
       throw err;
     } else {
-      console.log(`Successfully connected to ${mongo_uri}`);
+      console.log(`Successfully connected to mongoDB`);
     }
   }
 );
