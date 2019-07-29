@@ -42,6 +42,7 @@ export default class Login extends Component {
           <div className="field">
             <label>Username</label>
             <input
+              required
               type="text"
               name="username"
               placeholder="Username"
@@ -52,6 +53,7 @@ export default class Login extends Component {
           <div className="field">
             <label>Password</label>
             <input
+              required
               type="text"
               name="password"
               placeholder="Password"
