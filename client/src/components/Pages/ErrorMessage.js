@@ -7,6 +7,12 @@ const ErrorMessage = props => {
         <div className="header">{props.error}</div>
       </div>
     );
+  } else if (props.success) {
+    return (
+      <div className="ui positive message">
+        <div className="header">{props.success}</div>
+      </div>
+    );
   } else {
     return null;
   }

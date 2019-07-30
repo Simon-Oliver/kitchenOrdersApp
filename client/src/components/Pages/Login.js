@@ -18,6 +18,8 @@ export default class Login extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
+    }).then(res => {
+      console.log(res);
     });
   }
 

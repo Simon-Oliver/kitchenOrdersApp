@@ -24,16 +24,17 @@ export default class Register extends React.Component {
     })
       .then(res => {
         if (res.status === 200) {
-          console.log('User created');
-          this.setState({
-            error: '',
-            username: '',
-            password: '',
-            password2: '',
-            role: '',
-            redirect: true
+          res.json().then(data => {
+            this.setState({
+              error: '',
+              success: data.success,
+              username: '',
+              password: '',
+              password2: '',
+              role: '',
+              redirect: true
+            });
           });
-          //res.json().then(data => console.log(data));
         } else {
           res.json().then(data => {
             this.setState({ error: data.error });
@@ -44,9 +45,11 @@ export default class Register extends React.Component {
   }
 
   isValidPassword() {
-    const { password, password2 } = this.state;
+    const { password, password2, role } = this.state;
     if (password.length < 4) {
       return 'Password must be longer than 4 characters';
+    } else if (role === '') {
+      return 'Please choose a role.';
     } else {
       if (password === password2) {
         return true;
@@ -82,7 +85,7 @@ export default class Register extends React.Component {
     return (
       <div className="ui segment login">
         <h2 className="ui header">Create Account</h2>
-        <ErrorMessage error={this.state.error} />
+        <ErrorMessage error={this.state.error} success={this.state.success} />
         <form className="ui form" onSubmit={e => this.onFormSubmit(e)}>
           <div className="field">
             <label>Username</label>

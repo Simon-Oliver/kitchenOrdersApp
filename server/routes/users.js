@@ -1,16 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const User = require('../models/User');
 
 const router = express.Router();
 
 const errorObj = {};
-
-// Login route
-router.post('/login', (req, res) => {
-  console.log(req.body);
-  res.status(200).send(req.body);
-});
 
 // Register route
 router.get('/register', (req, res) => res.send('Register'));
@@ -40,7 +35,8 @@ router.post('/register', (req, res) => {
           newUser
             .save()
             .then(user => {
-              res.status(200).send(JSON.stringify(user));
+              const success = { user, success: 'Account has been created.' };
+              res.status(200).send(JSON.stringify(success));
             })
             .catch(err => console.log(err));
         })
@@ -48,5 +44,21 @@ router.post('/register', (req, res) => {
     }
   });
 });
+
+// Login Handle
+router.post(
+  '/login',
+  (req, res, next) => {
+    console.log(req.body);
+    next();
+  },
+  passport.authenticate('local', (req, res) => {
+    console.log(`User`, req.user);
+    if (req.user || req.session.user) {
+      return res.send(JSON.stringify({ redirectURI: '/' }));
+    }
+    return res.send(JSON.stringify({ redirectURI: '/login' }));
+  })
+);
 
 module.exports = router;
