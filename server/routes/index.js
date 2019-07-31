@@ -1,10 +1,10 @@
 const express = require('express');
-const User = require('../models/User');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/welcome', (req, res) => {
-  res.send('Welcome');
+router.post('/welcome', auth, (req, res) => {
+  res.json({ msg: 'This is a privat route' });
 });
 
 module.exports = router;
