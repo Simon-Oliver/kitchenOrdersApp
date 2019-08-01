@@ -6,27 +6,39 @@ export default class Login extends Component {
   state = {
     username: '',
     password: '',
-    error: ''
+    error: '',
+    success: ''
   };
 
   loginUser() {
     const { username, password } = this.state;
 
-    fetch('/users/login', {
+    fetch('/users/auth', {
       method: 'POST', // or 'PUT'
       body: JSON.stringify({ username, password }), // data can be `string` or {object}!
       headers: {
         'Content-Type': 'application/json'
       }
     }).then(res => {
-      console.log(res);
+      if (res.status === 200) {
+        res.json().then(data => {
+          this.setState({
+            success: `Welcome back ${data.user.name}!`,
+            username: '',
+            password: '',
+            error: ''
+          });
+        });
+      } else {
+        res.json().then(data => {
+          this.setState({ error: data.error, username: '', password: '' });
+        });
+      }
     });
   }
 
   onFormSubmit(e) {
     e.preventDefault();
-    const { username, password } = this.state;
-    console.log(JSON.stringify({ username, password }));
     this.loginUser();
   }
 
@@ -39,7 +51,7 @@ export default class Login extends Component {
     return (
       <div className="ui segment login">
         <h2 className="ui header">Login</h2>
-        <ErrorMessage error={this.state.error} />
+        <ErrorMessage error={this.state.error} success={this.state.success} />
         <form className="ui form" onSubmit={e => this.onFormSubmit(e)}>
           <div className="field">
             <label>Username</label>
@@ -48,7 +60,7 @@ export default class Login extends Component {
               type="text"
               name="username"
               placeholder="Username"
-              value={this.state.name}
+              value={this.state.username}
               onChange={e => this.handleOnInputChange(e)}
             />
           </div>

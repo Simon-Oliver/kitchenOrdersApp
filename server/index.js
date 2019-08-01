@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const passport = require('passport');
+const cookieParser = require('cookie-parser');
 
 const router = require('./routes/index');
 const users = require('./routes/users');
@@ -16,12 +16,10 @@ mongoose
 
 const app = express();
 
-// Passport Config
-require('./config/passport')(passport);
-
 // parse application/x-www-form-urlencoded
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 5000;
 

@@ -62,20 +62,4 @@ router.post('/register', (req, res) => {
   });
 });
 
-// Login Handle
-router.post(
-  '/login',
-  (req, res, next) => {
-    console.log(req.body);
-    next();
-  },
-  passport.authenticate('local', (req, res) => {
-    console.log(`User`, req.user);
-    if (req.user || req.session.user) {
-      return res.json({ redirectURI: '/' });
-    }
-    return res.json({ redirectURI: '/login' });
-  })
-);
-
 module.exports = router;
