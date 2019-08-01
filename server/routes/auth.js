@@ -61,4 +61,9 @@ router.get('/auth/user', auth, (req, res) => {
     .then(user => res.json(user));
 });
 
+router.get('/auth/logout', (req, res) => {
+  res.clearCookie('token', { path: '/', httpOnly: true });
+  return res.json({ redirect: '/login' }).status(200);
+});
+
 module.exports = router;

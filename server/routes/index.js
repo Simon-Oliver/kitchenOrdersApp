@@ -4,8 +4,7 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/welcome', auth, (req, res) => {
-  console.log('welcome fired');
-  res.json({ msg: 'This is a privat route' });
+  return res.json({ msg: 'This is a privat route and you can see it.' });
 });
 
 module.exports = router;
