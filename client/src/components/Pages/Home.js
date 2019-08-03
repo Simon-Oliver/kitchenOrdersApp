@@ -37,7 +37,9 @@ class Home extends React.Component {
         ) : (
           <p>You won't know my secret until you login.</p>
         )}
-        <button onClick={() => this.onBtnClick()}>Logout</button>
+        <button className="ui button" onClick={() => this.onBtnClick()}>
+          Logout
+        </button>
       </div>
     );
   }
