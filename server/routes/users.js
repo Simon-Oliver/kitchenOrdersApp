@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const { Schema } = require('mongoose');
 
 // Config gets secret variables from default.json
 const config = require('config');

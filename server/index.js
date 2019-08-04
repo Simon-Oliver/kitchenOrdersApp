@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const orders = require('./routes/orders');
 
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost/kitchenTicketing', {
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/', router);
 app.use('/users', users);
 app.use('/users', auth);
+app.use('/orders', orders);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
