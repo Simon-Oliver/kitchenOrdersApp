@@ -10,6 +10,15 @@ export default class Login extends Component {
     success: ''
   };
 
+  componentDidMount() {
+    const { error } = this.props.location.state;
+    if (error) {
+      this.setState({
+        error
+      });
+    }
+  }
+
   loginUser() {
     const { username, password } = this.state;
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ErrorMessage from './ErrorMessage';
+import { Redirect } from 'react-router-dom';
 
 export default class AddOrder extends Component {
   state = {
@@ -7,7 +8,8 @@ export default class AddOrder extends Component {
     allergies: '',
     notes: '',
     error: '',
-    success: ''
+    success: '',
+    redirect: ''
   };
 
   onFormSubmit(e) {
@@ -33,7 +35,7 @@ export default class AddOrder extends Component {
           });
         } else {
           res.json().then(data => {
-            this.setState({ error: data.error });
+            this.setState({ error: data.error, redirect: data.redirect });
           });
         }
       })
@@ -46,12 +48,15 @@ export default class AddOrder extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={{ pathname: '/login', state: { error: this.state.error } }} />;
+    }
     return (
       <div className="ui segment login">
         <h2 className="ui header">Add Order</h2>
         <ErrorMessage error={this.state.error} success={this.state.success} />
-        <form class="ui form" onSubmit={e => this.onFormSubmit(e)}>
-          <div class="field">
+        <form className="ui form" onSubmit={e => this.onFormSubmit(e)}>
+          <div className="field">
             <label>Menu Item:</label>
             <input
               type="text"
@@ -62,7 +67,7 @@ export default class AddOrder extends Component {
               onChange={e => this.handleOnInputChange(e)}
             />
           </div>
-          <div class="field">
+          <div className="field">
             <label>Allergies:</label>
             <textarea
               rows="2"
@@ -73,7 +78,7 @@ export default class AddOrder extends Component {
               onChange={e => this.handleOnInputChange(e)}
             />
           </div>
-          <div class="field">
+          <div className="field">
             <label>Notes:</label>
             <textarea
               type="text"
@@ -84,7 +89,7 @@ export default class AddOrder extends Component {
             />
           </div>
           <div className="container login-button">
-            <button class="ui button" type="submit">
+            <button className="ui button" type="submit">
               Submit
             </button>
           </div>

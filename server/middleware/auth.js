@@ -7,7 +7,7 @@ function auth(req, res, next) {
     req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({ error: 'Authorization denied.' });
+    return res.status(401).json({ error: 'Authorization denied.', redirect: '/login' });
   }
 
   try {
@@ -18,7 +18,7 @@ function auth(req, res, next) {
     req.user = decoded;
     next();
   } catch (e) {
-    return res.status(400).json({ error: 'Token is not valid.' });
+    return res.status(400).json({ error: 'Token is not valid.', redirect: '/login' });
   }
 }
 

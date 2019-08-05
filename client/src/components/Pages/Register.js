@@ -61,7 +61,6 @@ export default class Register extends React.Component {
 
   onFormSubmit(e) {
     e.preventDefault();
-    const { username, password } = this.state;
     const isValid = this.isValidPassword();
 
     if (isValid === true) {
@@ -73,7 +72,6 @@ export default class Register extends React.Component {
 
   handleOnInputChange(e) {
     const { name, value } = e.target;
-    console.log(e.target.name);
     this.setState({ [name]: value });
   }
 
@@ -102,7 +100,7 @@ export default class Register extends React.Component {
             <label>Role</label>
             <select
               name="role"
-              class="ui simple dropdown"
+              className="ui simple dropdown"
               onChange={e => this.handleOnInputChange(e)}
             >
               <option value="">Role</option>
