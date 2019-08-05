@@ -11,11 +11,13 @@ export default class Login extends Component {
   };
 
   componentDidMount() {
-    const { error } = this.props.location.state;
-    if (error) {
-      this.setState({
-        error
-      });
+    if (this.props.location.state !== undefined) {
+      const { error } = this.props.location.state;
+      if (error) {
+        this.setState({
+          error
+        });
+      }
     }
   }
 
@@ -53,7 +55,7 @@ export default class Login extends Component {
 
   handleOnInputChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, error: '', success: '' });
   }
 
   render() {

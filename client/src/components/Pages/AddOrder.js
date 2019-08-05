@@ -44,7 +44,7 @@ export default class AddOrder extends Component {
 
   handleOnInputChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, error: '', success: '' });
   }
 
   render() {

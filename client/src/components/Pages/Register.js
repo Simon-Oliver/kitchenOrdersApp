@@ -72,7 +72,7 @@ export default class Register extends React.Component {
 
   handleOnInputChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, error: '', success: '' });
   }
 
   render() {
