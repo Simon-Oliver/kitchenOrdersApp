@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { signIn, signOut } from '../../actions/authentication';
 import { isError, isSuccess, clearStatus } from '../../actions/status';
 import './Login.css';
@@ -8,11 +9,11 @@ import ErrorMessage from './ErrorMessage';
 class Login extends Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    redirect: ''
   };
 
   componentDidMount() {
-    console.log(this.props);
     if (this.props.location.state !== undefined) {
       const { error } = this.props.location.state;
       if (error) {
@@ -40,7 +41,8 @@ class Login extends Component {
           this.props.signIn(id, role, name);
           this.setState({
             username: '',
-            password: ''
+            password: '',
+            redirect: '/'
           });
         });
       } else {
@@ -64,6 +66,9 @@ class Login extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}></Redirect>;
+    }
     return (
       <div className="ui segment login">
         <h2 className="ui header">Login</h2>

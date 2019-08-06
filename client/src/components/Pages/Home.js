@@ -15,7 +15,6 @@ class Home extends React.Component {
     fetch('/welcome')
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ msg: data.msg, user: data.user });
       });
   }
