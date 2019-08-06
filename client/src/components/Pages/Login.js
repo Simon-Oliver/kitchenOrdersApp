@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../../actions/authentication';
+import { isError, isSuccess, clearStatus } from '../../actions/status';
 import './Login.css';
 import ErrorMessage from './ErrorMessage';
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     username: '',
-    password: '',
-    error: '',
-    success: ''
+    password: ''
   };
 
   componentDidMount() {
+    console.log(this.props);
     if (this.props.location.state !== undefined) {
       const { error } = this.props.location.state;
       if (error) {
@@ -33,16 +35,18 @@ export default class Login extends Component {
     }).then(res => {
       if (res.status === 200) {
         res.json().then(data => {
+          const { id, name, role } = data.user;
+          this.props.isSuccess(`Welcome back ${name}!`);
+          this.props.signIn(id, role, name);
           this.setState({
-            success: `Welcome back ${data.user.name}!`,
             username: '',
-            password: '',
-            error: ''
+            password: ''
           });
         });
       } else {
         res.json().then(data => {
-          this.setState({ error: data.error, username: '', password: '' });
+          this.props.isError(data.error);
+          this.setState({ username: '', password: '' });
         });
       }
     });
@@ -55,14 +59,15 @@ export default class Login extends Component {
 
   handleOnInputChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value, error: '', success: '' });
+    this.setState({ [name]: value });
+    this.props.clearStatus();
   }
 
   render() {
     return (
       <div className="ui segment login">
         <h2 className="ui header">Login</h2>
-        <ErrorMessage error={this.state.error} success={this.state.success} />
+        <ErrorMessage error={this.props.error} success={this.props.success} />
         <form className="ui form" onSubmit={e => this.onFormSubmit(e)}>
           <div className="field">
             <label>Username</label>
@@ -99,3 +104,12 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { ...state.auth, ...state.status };
+};
+
+export default connect(
+  mapStateToProps,
+  { signIn, signOut, isError, isSuccess, clearStatus }
+)(Login);

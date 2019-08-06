@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../../actions/authentication';
+import { isError, isSuccess, clearStatus } from '../../actions/status';
 
 class Home extends React.Component {
   state = {
@@ -20,6 +23,7 @@ class Home extends React.Component {
   onBtnClick() {
     fetch('users/auth/logout')
       .then(res => res.json())
+      .then(this.props.signOut())
       .then(data => {
         this.setState({ redirect: data.redirect });
       });
@@ -45,4 +49,11 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return { ...state.auth, ...state.status };
+};
+
+export default connect(
+  mapStateToProps,
+  { signIn, signOut, isError, isSuccess, clearStatus }
+)(Home);
