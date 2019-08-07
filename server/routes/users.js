@@ -1,10 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const config = require('config');
+const auth = require('../middleware/auth');
 
 // Config gets secret variables from default.json
-const config = require('config');
 
 config.get('jwtSecret');
 
@@ -14,11 +14,15 @@ const User = require('../models/User');
 const router = express.Router();
 
 // register Handle
-router.post('/register', (req, res) => {
+router.post('/register', auth, (req, res) => {
   const { username, password, role } = req.body;
   if (!username || !password || !role) {
     return res.status(400).json({ error: 'Please enter all fields.' });
   }
+  if (req.user.role !== 'admin') {
+    return res.status(401).json({ error: 'Please login as adminto create new user.' });
+  }
+
   User.findOne({ name: username }).then(user => {
     if (user) {
       return res.status(409).json({ error: 'Username is already taken!' });

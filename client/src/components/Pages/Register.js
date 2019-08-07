@@ -8,8 +8,7 @@ export default class Register extends React.Component {
     password: '',
     password2: '',
     role: '',
-    error: '',
-    redirect: false
+    error: ''
   };
 
   addUser() {
@@ -31,8 +30,7 @@ export default class Register extends React.Component {
               username: '',
               password: '',
               password2: '',
-              role: '',
-              redirect: true
+              role: ''
             });
           });
         } else {
@@ -76,10 +74,6 @@ export default class Register extends React.Component {
   }
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to="/login" />;
-    }
-
     return (
       <div className="ui segment login">
         <h2 className="ui header">Create Account</h2>

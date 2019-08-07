@@ -42,7 +42,7 @@ class Login extends Component {
           this.setState({
             username: '',
             password: '',
-            redirect: '/'
+            redirect: '/home'
           });
         });
       } else {

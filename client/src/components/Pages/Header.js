@@ -20,7 +20,7 @@ class Header extends Component {
   render() {
     return (
       <div className="ui inverted segment">
-        <div className="ui inverted secondary pointing menu">
+        <div className="ui inverted secondary menu">
           <NavLink to="/home" className="item" activeClassName="active">
             Home
           </NavLink>
