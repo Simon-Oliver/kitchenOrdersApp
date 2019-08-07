@@ -19,19 +19,7 @@ class Home extends React.Component {
       });
   }
 
-  onBtnClick() {
-    fetch('users/auth/logout')
-      .then(res => res.json())
-      .then(this.props.signOut())
-      .then(data => {
-        this.setState({ redirect: data.redirect });
-      });
-  }
-
   render() {
-    if (this.state.redirect) {
-      return <Redirect to="/login"></Redirect>;
-    }
     return (
       <div className="ui header">
         <h3>This is the Welcome page</h3>
@@ -40,9 +28,6 @@ class Home extends React.Component {
         ) : (
           <p>You won't know my secret until you login.</p>
         )}
-        <button className="ui button" onClick={() => this.onBtnClick()}>
-          Logout
-        </button>
       </div>
     );
   }
