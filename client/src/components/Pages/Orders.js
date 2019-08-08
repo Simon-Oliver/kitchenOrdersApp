@@ -12,6 +12,7 @@ class Orders extends Component {
       .then(res => {
         if (res.status === 200) {
           res.json().then(data => {
+            console.log(data);
             this.setState({ orders: data.orders });
           });
         }
@@ -21,11 +22,11 @@ class Orders extends Component {
 
   renderList(items) {
     console.log(items);
-    return items.map(e => <Order item={{ ...e }} />);
+    //return items.map(e => <Order item={{ ...e }} />);
   }
 
   render() {
-    return <div className="orders">{this.renderList(this.state.orders)}</div>;
+    return <div className="orders">Orders</div>;
   }
 }
 

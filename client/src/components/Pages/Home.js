@@ -12,11 +12,19 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
-    fetch('/welcome')
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ msg: data.msg, user: data.user });
-      });
+    // fetch('/welcome')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     this.setState({ msg: data.msg, user: data.user });
+    //   });
+
+    fetch('/orders/new', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(['fruit', 'apple', 'carotte', 'cellery']), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   render() {
