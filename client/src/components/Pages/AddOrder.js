@@ -7,42 +7,42 @@ import './OrderForm.css';
 export default class AddOrder extends Component {
   state = {
     success: '',
+    error: '',
     redirect: '',
+    tableName: '',
     orders: [{ menuItem: '', allergies: '', notes: '' }]
   };
 
-  componentDidMount() {
-    console.log(this.state.orders);
-  }
+  componentDidMount() {}
 
   onFormSubmit(e) {
-    // e.preventDefault();
-    // const { orders } = this.state;
-    // fetch('/orders/new', {
-    //   method: 'POST', // or 'PUT'
-    //   body: JSON.stringify(orders), // data can be `string` or {object}!
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(res => {
-    //     if (res.status === 200) {
-    //       res.json().then(data => {
-    //         this.setState({
-    //           error: '',
-    //           success: data.success,
-    //           menuItem: '',
-    //           allergies: '',
-    //           notes: ''
-    //         });
-    //       });
-    //     } else {
-    //       res.json().then(data => {
-    //         this.setState({ error: data.error, redirect: data.redirect });
-    //       });
-    //     }
-    //   })
-    //   .catch(err => console.log(err));
+    e.preventDefault();
+    const { orders, tableName } = this.state;
+    fetch('/orders/new', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify({ tableName, orders }), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          res.json().then(data => {
+            this.setState({
+              error: '',
+              success: data.success,
+              menuItem: '',
+              allergies: '',
+              notes: ''
+            });
+          });
+        } else {
+          res.json().then(data => {
+            this.setState({ error: data.error, redirect: data.redirect });
+          });
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   // handleOnInputChange(e) {
@@ -57,6 +57,14 @@ export default class AddOrder extends Component {
     });
   };
 
+  deleteItem = i => {
+    console.log(i);
+    this.setState(prevState => {
+      prevState.orders.splice(i, 1);
+      return { orders: prevState.orders };
+    });
+  };
+
   renderOrderItems(orders) {
     return orders.map((e, i) => {
       return (
@@ -67,6 +75,7 @@ export default class AddOrder extends Component {
           allergies={e.allergies}
           notes={e.notes}
           onItemChange={this.onItemChange}
+          deleteItem={this.deleteItem}
         />
       );
     });
@@ -78,19 +87,35 @@ export default class AddOrder extends Component {
     }));
   }
 
+  handleOnInputChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value, error: '', success: '' });
+  }
+
   render() {
     if (this.state.redirect) {
       return <Redirect to={{ pathname: '/login', state: { error: this.state.error } }} />;
     }
     return (
       <div className="ui segment" id="orderForm">
+        <ErrorMessage error={this.state.error} success={this.state.success} />
         <h2 className="ui header">New Order</h2>
         <form className="ui form" onSubmit={e => this.onFormSubmit(e)}>
-          <ErrorMessage error={this.state.error} success={this.state.success} />
+          <div className="field">
+            <label>Tabel Name:</label>
+            <input
+              type="text"
+              name="tableName"
+              placeholder="Tabel Name"
+              value={this.props.tableName}
+              required
+              onChange={e => this.handleOnInputChange(e)}
+            />
+          </div>
           {this.renderOrderItems(this.state.orders)}
           <div className="container login-button">
             <button className="ui green button" type="submit">
-              Submit
+              Add Order
             </button>
           </div>
         </form>

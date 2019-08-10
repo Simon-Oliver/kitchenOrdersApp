@@ -6,6 +6,7 @@ const OrderItemSchema = new mongoose.Schema({
   notes: { type: String },
   allergies: { type: String },
   _author: { type: Schema.Types.ObjectId, ref: 'user' },
+  _order: { type: Schema.Types.ObjectId, ref: 'orders' },
   date: {
     type: Date,
     default: Date.now

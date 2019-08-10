@@ -16,16 +16,23 @@ router.get('/', auth, (req, res) => {
 });
 
 router.post('/new', auth, (req, res) => {
-  const menuItems = req.body;
+  const { tableName, orders } = req.body;
   const { id } = req.user;
 
   User.findById(id).then(user => {
-    const newOrder = new Order({ _items: [], _author: user._id });
+    const newOrder = new Order({ _items: [], _author: user._id, tableName });
 
     user.orders.push(newOrder);
 
-    menuItems.forEach(e => {
-      const newOrderItem = new OrderItem({ menuItem: e, _author: user._id });
+    orders.forEach(e => {
+      console.log(e);
+      const newOrderItem = new OrderItem({
+        menuItem: e.menuItem,
+        allergies: e.allergies,
+        notes: e.notes,
+        _author: user._id,
+        _order: newOrder._id
+      });
       newOrder._items.push(newOrderItem);
       newOrderItem.save();
     });

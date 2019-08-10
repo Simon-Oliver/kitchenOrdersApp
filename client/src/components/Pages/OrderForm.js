@@ -59,6 +59,9 @@ export default class OrderForm extends Component {
             onChange={e => this.handleOnInputChange(e)}
           />
         </div>
+        <button className="ui red button" onClick={() => this.props.deleteItem(this.props.index)}>
+          Delete
+        </button>
       </div>
     );
   }
