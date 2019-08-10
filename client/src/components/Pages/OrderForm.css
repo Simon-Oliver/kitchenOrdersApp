@@ -1,3 +1,10 @@
 #orderForm {
     width: 100%;
+    position: relative;
+}
+
+#addItem {
+    position: absolute;
+    bottom: -25.715px;
+    right: 0;
 }

@@ -8,7 +8,7 @@ export default class AddOrder extends Component {
   state = {
     success: '',
     redirect: '',
-    orders: []
+    orders: [{ menuItem: '', allergies: '', notes: '' }]
   };
 
   componentDidMount() {
@@ -45,14 +45,30 @@ export default class AddOrder extends Component {
     //   .catch(err => console.log(err));
   }
 
-  handleOnInputChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value, error: '', success: '' });
-  }
+  // handleOnInputChange(e) {
+  //   const { name, value } = e.target;
+  //   this.setState({ [name]: value, error: '', success: '' });
+  // }
+
+  onItemChange = (i, update) => {
+    this.setState(prevState => {
+      prevState.orders[i] = update;
+      return { orders: prevState.orders };
+    });
+  };
 
   renderOrderItems(orders) {
-    return orders.map(e => {
-      return <OrderForm menuItem={e.menuItem} allergies={e.allergies} notes={e.notes} />;
+    return orders.map((e, i) => {
+      return (
+        <OrderForm
+          key={i}
+          index={i}
+          menuItem={e.menuItem}
+          allergies={e.allergies}
+          notes={e.notes}
+          onItemChange={this.onItemChange}
+        />
+      );
     });
   }
 
@@ -60,7 +76,6 @@ export default class AddOrder extends Component {
     this.setState(prevState => ({
       orders: [...prevState.orders, { menuItem: '', allergies: '', notes: '' }]
     }));
-    console.log('clicked', this.state);
   }
 
   render() {
@@ -70,10 +85,21 @@ export default class AddOrder extends Component {
     return (
       <div className="ui segment" id="orderForm">
         <h2 className="ui header">New Order</h2>
-        <ErrorMessage error={this.state.error} success={this.state.success} />
-        {this.renderOrderItems(this.state.orders)}
-        <button class="circular ui big icon button" onClick={e => this.addOrderItem(e)}>
-          <i class="icon plus"></i>
+        <form className="ui form" onSubmit={e => this.onFormSubmit(e)}>
+          <ErrorMessage error={this.state.error} success={this.state.success} />
+          {this.renderOrderItems(this.state.orders)}
+          <div className="container login-button">
+            <button className="ui green button" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+        <button
+          id="addItem"
+          className="circular ui huge red icon button"
+          onClick={e => this.addOrderItem(e)}
+        >
+          <i className="icon plus"></i>
         </button>
       </div>
     );
