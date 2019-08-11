@@ -22,11 +22,11 @@ class Orders extends Component {
 
   renderList(items) {
     console.log(items);
-    //return items.map(e => <Order item={{ ...e }} />);
+    return items.map(e => <Order item={{ ...e }} />);
   }
 
   render() {
-    return <div className="orders">Orders</div>;
+    return <div>{this.renderList(this.state.orders)}</div>;
   }
 }
 

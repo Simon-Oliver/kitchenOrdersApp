@@ -9,10 +9,16 @@ const router = express.Router();
 
 router.get('/', auth, (req, res) => {
   Order.find({})
-    .then(orderArr => {
-      res.status(200).json({ orders: orderArr });
-    })
-    .catch(err => console.log(err));
+    .populate('_items')
+    .exec(function(err, order) {
+      if (err) console.log(err);
+      console.log(order);
+      res.status(200).json({ orders: order });
+    });
+  // .then(orderArr => {
+  //   res.status(200).json({ orders: orderArr });
+  // })
+  // .catch(err => console.log(err));
 });
 
 router.post('/new', auth, (req, res) => {

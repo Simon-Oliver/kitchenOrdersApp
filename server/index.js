@@ -3,17 +3,17 @@ const path = require('path');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-const router = require('./routes/index');
-const users = require('./routes/users');
-const auth = require('./routes/auth');
-const orders = require('./routes/orders');
-
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost/kitchenTicketing', {
     useNewUrlParser: true
   })
   .then(() => console.log('MongoDB successfully connected'))
   .catch(err => console.log(err));
+
+const router = require('./routes/index');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
+const orders = require('./routes/orders');
 
 const app = express();
 

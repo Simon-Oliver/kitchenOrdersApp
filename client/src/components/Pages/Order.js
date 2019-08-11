@@ -1,27 +1,24 @@
 import React from 'react';
+import OrderItems from './OrderItems';
 
-const Order = props => {
-  console.log('order component', props);
-  return (
-    <div class="ui card">
-      <div class="content">
-        <div class="header">{props.item.menuItem}</div>
-      </div>
-      <div class="content">
-        <h4 class="ui sub header">Allergies</h4>
-        <div class="ui small feed">
-          <div class="event">
-            <div class="content">
-              <div class="summary">{props.item.allergies}</div>
-            </div>
-          </div>
+class Order extends React.Component {
+  state = {};
+
+  renderItemList(items) {
+    return items.map((e, i) => <OrderItems key={i} item={e} />);
+  }
+
+  render() {
+    console.log('order component', this.props);
+    return (
+      <div class="ui card">
+        <div class="content">
+          <div class="header">{this.props.item.tableName}</div>
         </div>
+        {this.renderItemList(this.props.item._items)}
       </div>
-      <div class="extra content">
-        <button class="ui button">Join Project</button>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Order;
