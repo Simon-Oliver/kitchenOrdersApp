@@ -26,7 +26,7 @@ class Orders extends Component {
   }
 
   render() {
-    return <div>{this.renderList(this.state.orders)}</div>;
+    return <div className="orderList order-container">{this.renderList(this.state.orders)}</div>;
   }
 }
 
