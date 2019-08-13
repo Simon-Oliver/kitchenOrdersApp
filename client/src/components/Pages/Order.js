@@ -13,10 +13,11 @@ class Order extends React.Component {
     console.log('order component', moment(this.props.item.date).format('HH:mm'));
     return (
       <div class="ui card">
+        <button class="positive ui button">Order Completed</button>
         <div class="content">
           <div class="header">{this.props.item.tableName}</div>
           <div class="meta">
-            <span>{moment(this.props.item.date).format('HH:mm')}</span>
+            <span>Ordered: {moment(this.props.item.date).format('HH:mm')}</span>
           </div>
         </div>
         {this.renderItemList(this.props.item._items)}
