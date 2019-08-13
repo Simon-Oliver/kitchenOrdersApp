@@ -6,17 +6,25 @@ class Order extends React.Component {
   state = {};
 
   renderItemList(items) {
-    return items.map((e, i) => <OrderItems key={i} item={e} />);
+    const order = [];
+    for (const item in items) {
+      console.log(items[item]);
+    }
+
+    // return items.map((e, i) => {
+    //   console.log('renderList Order', e);
+    //   return <OrderItems key={i} item={e} />;
+    // });
   }
 
   render() {
-    console.log('order component', moment(this.props.item.date).format('HH:mm'));
+    console.log('Order Props', this.props.item._items);
     return (
-      <div class="ui card">
-        <button class="positive ui button">Order Completed</button>
-        <div class="content">
-          <div class="header">{this.props.item.tableName}</div>
-          <div class="meta">
+      <div className="ui card">
+        <button className="positive ui button">Order Completed</button>
+        <div className="content">
+          <div className="header">{this.props.item.tableName}</div>
+          <div className="meta">
             <span>Ordered: {moment(this.props.item.date).format('HH:mm')}</span>
           </div>
         </div>
