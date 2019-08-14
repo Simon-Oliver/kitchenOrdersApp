@@ -12,7 +12,6 @@ router.get('/', auth, (req, res) => {
     .populate('_items')
     .exec(function(err, order) {
       if (err) console.log(err);
-      console.log(order);
       res.status(200).json({ orders: order });
     });
   // .then(orderArr => {
@@ -31,7 +30,6 @@ router.post('/new', auth, (req, res) => {
     user.orders.push(newOrder);
 
     orders.forEach(e => {
-      console.log(e);
       const newOrderItem = new OrderItem({
         menuItem: e.menuItem,
         allergies: e.allergies,
@@ -46,7 +44,6 @@ router.post('/new', auth, (req, res) => {
     newOrder
       .save()
       .then(order => {
-        console.log(newOrder);
         user.save();
         newOrder.save();
         res.status(200).json({ success: 'Order has been added.' });

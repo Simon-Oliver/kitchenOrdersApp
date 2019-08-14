@@ -6,19 +6,13 @@ class Order extends React.Component {
   state = {};
 
   renderItemList(items) {
-    const order = [];
-    for (const item in items) {
-      console.log(items[item]);
-    }
-
-    // return items.map((e, i) => {
-    //   console.log('renderList Order', e);
-    //   return <OrderItems key={i} item={e} />;
-    // });
+    return items.map((e, i) => {
+      console.log('renderList Order', e);
+      return <OrderItems key={i} item={e} />;
+    });
   }
 
   render() {
-    console.log('Order Props', this.props.item._items);
     return (
       <div className="ui card">
         <button className="positive ui button">Order Completed</button>
