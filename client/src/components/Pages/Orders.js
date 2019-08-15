@@ -22,24 +22,6 @@ class Orders extends Component {
 
   renderList(items) {
     console.log(items);
-    // function groupBy(objectArray, property) {
-    //   return objectArray.reduce(function(acc, obj) {
-    //     var key = obj[property];
-    //     if (!acc[key]) {
-    //       acc[key] = [];
-    //     }
-    //     acc[key].push(obj);
-    //     return acc;
-    //   }, {});
-    // }
-
-    // items.forEach(e => {
-    //   //test.push(groupBy(e._items, 'menuItem'));
-    //   e._items = groupBy(e._items, 'menuItem');
-    // });
-
-    // items._items = test;
-
     return items.map((e, i) => <Order key={i} item={{ ...e }} />);
   }
 

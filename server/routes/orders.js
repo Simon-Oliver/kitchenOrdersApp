@@ -20,6 +20,14 @@ router.get('/', auth, (req, res) => {
   // .catch(err => console.log(err));
 });
 
+router.post('/completed', auth, (req, res) => {
+  console.log(req.body.id);
+  Order.findByIdAndUpdate(req.body.id, { orderComplete: true }, { new: true }, (err, update) => {
+    if (err) console.log(err);
+    console.log(update);
+  });
+});
+
 router.post('/new', auth, (req, res) => {
   const { tableName, orders } = req.body;
   const { id } = req.user;

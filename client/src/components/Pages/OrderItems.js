@@ -4,10 +4,8 @@ const OrderItems = props => {
   return (
     <div className="content">
       <h4 className="ui header">{props.item.menuItem}</h4>
-      <div className="meta">Allergies:</div>
-      <div className="description">{props.item.allergies}</div>
-      <div className="meta">Notes:</div>
-      <div className="description">{props.item.notes}</div>
+      <div className="meta">Allergies: {props.item.allergies}</div>
+      <div className="meta">Notes: {props.item.notes}</div>
     </div>
   );
 };
