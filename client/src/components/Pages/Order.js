@@ -55,7 +55,7 @@ class Order extends React.Component {
         <div className="content">
           <div className="header">{this.props.item.tableName}</div>
           <div className="meta">
-            <span>Ordered: {moment(this.props.item.date).format('HH:mm')}</span>
+            <span>Ordered: {moment(this.props.item.date).format('HH:mm | DD/MM/YY')}</span>
           </div>
         </div>
         {this.renderItemList(this.props.item._items)}
