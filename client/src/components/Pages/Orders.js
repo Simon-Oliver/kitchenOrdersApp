@@ -13,7 +13,8 @@ class Orders extends Component {
         if (res.status === 200) {
           res.json().then(data => {
             console.log('data orders raw', data);
-            this.setState({ orders: data.orders });
+            const filteredData = data.orders.filter(e => e.orderComplete !== true);
+            this.setState({ orders: filteredData });
           });
         }
       })
