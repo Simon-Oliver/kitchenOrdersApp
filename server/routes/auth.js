@@ -15,13 +15,15 @@ const router = express.Router();
 
 // auth User
 router.post('/auth', (req, res) => {
+  console.log(req.body);
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ error: 'Please enter all fields.' });
   }
 
+  // User.find({}).then(user => console.log(user));
   // Check for user
-  User.findOne({ name: username }).then(user => {
+  User.findOne({ userName: username }).then(user => {
     if (!user) {
       return res.status(409).json({ error: 'User does not exist' });
     }

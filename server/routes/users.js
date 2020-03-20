@@ -15,12 +15,14 @@ const router = express.Router();
 
 // register Handle
 router.post('/register', auth, (req, res) => {
+  console.log(req.user);
+
   const { username, password, role } = req.body;
   if (!username || !password || !role) {
     return res.status(400).json({ error: 'Please enter all fields.' });
   }
   if (req.user.role !== 'admin') {
-    return res.status(401).json({ error: 'Please login as adminto create new user.' });
+    return res.status(401).json({ error: 'Please login as admin to create new user.' });
   }
 
   User.findOne({ name: username }).then(user => {

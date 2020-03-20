@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost/kitchenTicketing', {
+  .connect(process.env.MONGODB_URI || 'mongodb://localhost/kitchenTest', {
     useNewUrlParser: true
   })
   .then(() => console.log('MongoDB successfully connected'))
